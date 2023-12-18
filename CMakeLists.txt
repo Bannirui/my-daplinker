@@ -4,8 +4,8 @@ project(my_daplink_v1)
 # 检查py支持
 find_package(Python3 REQUIRED)
 
-if (NOT EXISTS "${CMAKE_SOURCE_DIR}/venv")
-    execute_process(COMMAND python3 -m venv "${CMAKE_SOURCE_DIR}/venv")
+if (NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/venv")
+    execute_process(COMMAND python3 -m venv "${CMAKE_CURRENT_SOURCE_DIR}/venv")
 endif ()
 
 # py虚拟环境的progen包
@@ -13,7 +13,7 @@ set(my_progen "venv/bin/progen")
 if (NOT EXISTS ${my_progen})
     # 安装依赖
     execute_process(
-            COMMAND ${CMAKE_SOURCE_DIR}/venv/bin/pip install -r ${CMAKE_SOURCE_DIR}/requirements.txt --upgrade
+            COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/venv/bin/pip install -r ${CMAKE_CURRENT_SOURCE_DIR}/requirements.txt --upgrade
             TIMEOUT 300
     )
 endif ()
@@ -56,7 +56,7 @@ message(STATUS "arm-none-eabi版本${arm_none_eabi_ver}")
 add_custom_command(
         OUTPUT compile_bl
         DEPENDS ${my_progen}
-        COMMAND cd ${CMAKE_SOURCE_DIR} && source ./venv/bin/activate && progen generate -t make_gcc_arm -p stm32f103xb_bl -b
+        COMMAND cd ${CMAKE_CURRENT_SOURCE_DIR} && source ./venv/bin/activate && progen generate -t make_gcc_arm -p stm32f103xb_bl -b
         COMMENT 编译daplink的bootloader
 )
 
@@ -65,7 +65,7 @@ add_custom_command(
 add_custom_command(
         OUTPUT compile_if
         DEPENDS ${my_progen}
-        COMMAND cd ${CMAKE_SOURCE_DIR} && source ./venv/bin/activate && progen generate -t make_gcc_arm -p stm32f103xb_if -b
+        COMMAND cd ${CMAKE_CURRENT_SOURCE_DIR} && source ./venv/bin/activate && progen generate -t make_gcc_arm -p stm32f103xb_if -b
         COMMENT 编译daplink的固件
 )
 
