@@ -8,6 +8,7 @@
 cmake \
     -DCMAKE_C_COMPILER_FORCED=ON \
     -DCMAKE_CXX_COMPILER_FORCED=ON \
+    -Dgit_subtree=OFF \
     -S . \
     -B build
 
