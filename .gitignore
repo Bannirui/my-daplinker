@@ -102,3 +102,5 @@ mbed-os/
 # 自定义
 ./venv/
 ./projectfiles/
+.idea/
+.vscode/
