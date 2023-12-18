@@ -98,3 +98,7 @@ mbed-os/
 
 #vscode editor
 .vscode
+
+# 自定义
+./venv/
+./projectfiles/
