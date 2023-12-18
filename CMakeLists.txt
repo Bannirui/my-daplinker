@@ -9,7 +9,7 @@ if (NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/venv")
 endif ()
 
 # py虚拟环境的progen包
-set(my_progen "venv/bin/progen")
+set(my_progen "${CMAKE_CURRENT_SOURCE_DIR}/venv/bin/progen")
 if (NOT EXISTS ${my_progen})
     # 安装依赖
     execute_process(
