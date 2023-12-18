@@ -13,3 +13,5 @@ _deps
 
 # 自定义
 [bB][uU][iI][lL][dD]/
+.vscode/
+.idea/

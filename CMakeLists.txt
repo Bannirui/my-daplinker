@@ -23,3 +23,5 @@ endif ()
 if (NOT EXISTS "${PROJECT_SOURCE_DIR}/software/my_daplink_v1/projects.yaml")
     message(FATAL_ERROR "The DAPlink submodules was not downloaded! ${git_subtree} was turned off or failed. pls check.")
 endif ()
+
+add_subdirectory(software)

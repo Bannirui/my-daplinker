@@ -2,8 +2,8 @@ todo
 ---
 
 - [x] DAPLink源码模块
-- [ ] 源码编译
-- [ ] 官网编译流程托管cmake脚本
+- [X] [源码编译](./docs/md/COMPILE.md)
+- [X] [官网编译流程托管cmake脚本](./software/my_daplink_v1/README.md)
 - [ ] bootloader烧录
 - [ ] 固件烧录
 - [ ] 固件升级
