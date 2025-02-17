@@ -75,4 +75,4 @@ add_custom_target(
         DEPENDS compile_bl compile_if
 )
 
-message(WARNING "切记修改一下py源码的timeout超时, venv/lib/python3.11/site-packages/project_generator/commands/generate.py L70")
+message(WARNING "切记修改一下py源码的timeout超时, ${CMAKE_CURRENT_SOURCE_DIR}/venv/lib/pythonx.x/site-packages/project_generator/commands/generate.py L70 建议值300s")

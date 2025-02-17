@@ -6,7 +6,11 @@ cmake_minimum_required(VERSION 3.26)
 project(my_demo C CXX ASM)
 
 # specify cross-compilers and tools
-set(arm_none_eabi_dir "/home/dingrui/Documents/software/arm-none-eabi/bin")
+if (APPLE)
+    set(arm_none_eabi_dir "/Users/dingrui/MyApp/arm-none-eabi/bin")
+elseif (UNIX)
+    set(arm_none_eabi_dir "/home/dingrui/Documents/software/arm-none-eabi/bin")
+endif ()
 set(CMAKE_C_COMPILER "${arm_none_eabi_dir}/arm-none-eabi-gcc")
 set(CMAKE_CXX_COMPILER "${arm_none_eabi_dir}/arm-none-eabi-g++")
 set(CMAKE_ASM_COMPILER "${arm_none_eabi_dir}/arm-none-eabi-gcc")

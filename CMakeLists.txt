@@ -5,8 +5,8 @@ project(my-daplinker)
 # subtree代码
 find_package(Git QUIET)
 if (GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
-    # UPDATE SUBMODULES AS NEEDED
-    option(git_subtree "Check subtree during build" ON)
+    # UPDATE SUBMODULES AS NEEDED 默认不要更新submodule代码
+    option(git_subtree "Check subtree during build" OFF)
     if (git_subtree)
         message(STATUS "subtree update")
             execute_process(
