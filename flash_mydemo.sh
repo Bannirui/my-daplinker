@@ -4,5 +4,5 @@
 
 openocd \
 -s /usr/share/openocd/scripts \
--f ./cfg/openocdconfig/stlink_stm32f103c8t6.cfg \
--c "program build/software/my_demo/my_demo.elf verify reset exit"
+-f ./cfg/openocdconfig/daplink_stm32f103c8t6.cfg \
+-c "program ./build/software/my_demo/my_demo.elf verify reset exit"
