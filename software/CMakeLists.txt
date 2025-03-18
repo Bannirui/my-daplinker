@@ -5,10 +5,9 @@ project(software)
 find_program(my_openocd openocd)
 if (${my_openocd} STREQUAL "my_openocd-NOTFOUND")
     message(FATAL_ERROR "缺少openocd, as ${my_openocd}")
+else ()
+    message(STATUS "存在openocd环境")
 endif ()
 
 # DAPLink源码工程
-add_subdirectory(my_daplink_v1)
-
-# my_demo源码
-add_subdirectory(my_demo)
+add_subdirectory(DAPLink)

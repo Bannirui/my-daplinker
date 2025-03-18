@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/bin/sh
 
 # is not able to compile a simple test program
 # to avoid above err

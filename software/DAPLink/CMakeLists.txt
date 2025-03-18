@@ -1,21 +1,43 @@
 cmake_minimum_required(VERSION 3.25)
-project(my_daplink_v1)
+project(DAPLink)
 
 # 检查py支持
 find_package(Python3 REQUIRED)
 
-if (NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/venv")
-    execute_process(COMMAND python3 -m venv "${CMAKE_CURRENT_SOURCE_DIR}/venv")
+set(my_pyvenv "${CMAKE_CURRENT_SOURCE_DIR}/venv")
+if (NOT EXISTS ${my_pyvenv})
+    message(STATUS "不存在py虚拟环境 开始创建 ${my_pyvenv}")
+    execute_process(COMMAND python3 -m venv "${my_pyvenv}")
+else ()
+    message(STATUS "已经存在py虚拟环境 ${my_pyvenv}")
 endif ()
 
 # py虚拟环境的progen包
-set(my_progen "${CMAKE_CURRENT_SOURCE_DIR}/venv/bin/progen")
+set(my_progen "${my_pyvenv}/bin/progen")
 if (NOT EXISTS ${my_progen})
+    message(STATUS "不存在progen ${my_progen} 开始安装")
     # 安装依赖
     execute_process(
             COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/venv/bin/pip install -r ${CMAKE_CURRENT_SOURCE_DIR}/requirements.txt --upgrade
             TIMEOUT 300
     )
+else ()
+    message(STATUS "已经存在progen ${my_progen}")
+    set(generate_src "${my_pyvenv}/lib/python3.13/site-packages/project_generator/commands/generate.py")
+    file(READ ${generate_src} FILE_CONTENTS)
+    string(FIND "${FILE_CONTENTS}" "timeout=20.0" FOUND_INDEX)
+    if (FOUND_INDEX EQUAL -1)
+        message(STATUS "generate.py文件中超时时间不是20s 不需要修改")
+    else()
+        message(STATUS "generate.py文件中超时时间是20s")
+        message(STATUS "修改py generate文件的timeout值为300 ${generate_src}")
+        # 读取文件内容
+        file(READ ${generate_src} FILE_CONTENTS)
+        # 替换
+        string(REPLACE "timeout=20.0" "timeout=300.0" FILE_CONTENTS "${FILE_CONTENTS}")
+        # 写回文件
+        file(WRITE ${generate_src} "${FILE_CONTENTS}")
+    endif()
 endif ()
 
 # arm-none-eabi-gcc支持
@@ -37,11 +59,11 @@ execute_process(
 )
 
 if (arm_none_eabi_err)
-    message(FATAL_ERROR 检测arm-none-eabi版本号出错, ${arm_none_eabi_err})
+    message(FATAL_ERROR "检测arm-none-eabi版本号出错, ${arm_none_eabi_err}")
 endif ()
 
 if (NOT arm_none_eabi_succ)
-    message(FATAL_ERROR 没有检测到arm-none-eabi版本信息)
+    message(FATAL_ERROR "没有检测到arm-none-eabi版本信息")
 endif ()
 
 # 字符串处理提取版本号 找到x.x的字符串
@@ -49,7 +71,7 @@ string(REGEX MATCH "([0-9]+\.[0-9]+)" arm_none_eabi_ver ${arm_none_eabi_succ})
 if (NOT ${arm_none_eabi_ver} GREATER_EQUAL ${arm_none_eabi_required})
     message(FATAL_ERROR "arm-none-eabi版本号不符合要求:${arm_none_eabi_required}")
 endif ()
-message(STATUS "arm-none-eabi版本${arm_none_eabi_ver}")
+message(STATUS "arm-none-eabi版本符合要求 版本是${arm_none_eabi_ver}")
 
 # 编译bootloader
 # progen generate -t make_gcc_arm -p stm32f103xb_bl -b
@@ -73,6 +95,6 @@ add_custom_target(
         compile_daplink
         ALL
         DEPENDS compile_bl compile_if
+        COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/projectfiles/make_gcc_arm/stm32f103xb_bl/build/stm32f103xb_bl.elf" "${CMAKE_CURRENT_BINARY_DIR}/stm32f103xb_bl.elf"
+        COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/projectfiles/make_gcc_arm/stm32f103xb_if/build/stm32f103xb_if.elf" "${CMAKE_CURRENT_BINARY_DIR}/stm32f103xb_if.elf"
 )
-
-message(WARNING "切记修改一下py源码的timeout超时, ${CMAKE_CURRENT_SOURCE_DIR}/venv/lib/pythonx.x/site-packages/project_generator/commands/generate.py L70 建议值300s")
