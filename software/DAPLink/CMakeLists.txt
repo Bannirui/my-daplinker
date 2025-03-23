@@ -47,12 +47,14 @@ endif ()
 find_program(my_arm_none_eabi_gcc arm-none-eabi-gcc)
 if (${my_arm_none_eabi_gcc} STREQUAL "my-arm-none-eabi-gcc-NOTFOUND")
     message(FATAL_ERROR "缺少arm交叉编译器, as ${my_arm_none_eabi_gcc} ")
+else ()
+    message(STATUS "找到arm交叉编译器 ${my_arm_none_eabi_gcc} ")
 endif ()
 
 # 检测编译器版本号
 set(arm_none_eabi_required 10.3)
 execute_process(
-        COMMAND sh -c "${my_arm_none_eabi_gcc} --version"
+        COMMAND sh -c "arm-none-eabi-gcc --version"
         OUTPUT_VARIABLE arm_none_eabi_succ
         ERROR_VARIABLE arm_none_eabi_err
         OUTPUT_STRIP_TRAILING_WHITESPACE
@@ -68,7 +70,7 @@ endif ()
 
 # 字符串处理提取版本号 找到x.x的字符串
 string(REGEX MATCH "([0-9]+\.[0-9]+)" arm_none_eabi_ver ${arm_none_eabi_succ})
-if (NOT ${arm_none_eabi_ver} GREATER_EQUAL ${arm_none_eabi_required})
+if (NOT ${arm_none_eabi_ver} EQUAL ${arm_none_eabi_required})
     message(FATAL_ERROR "arm-none-eabi版本号不符合要求:${arm_none_eabi_required}")
 endif ()
 message(STATUS "arm-none-eabi版本符合要求 版本是${arm_none_eabi_ver}")
@@ -95,6 +97,6 @@ add_custom_target(
         compile_daplink
         ALL
         DEPENDS compile_bl compile_if
-        COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/projectfiles/make_gcc_arm/stm32f103xb_bl/build/stm32f103xb_bl.elf" "${CMAKE_CURRENT_BINARY_DIR}/stm32f103xb_bl.elf"
-        COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/projectfiles/make_gcc_arm/stm32f103xb_if/build/stm32f103xb_if.elf" "${CMAKE_CURRENT_BINARY_DIR}/stm32f103xb_if.elf"
+        COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/projectfiles/make_gcc_arm/stm32f103xb_bl/build/stm32f103xb_bl.bin" "${CMAKE_CURRENT_BINARY_DIR}/stm32f103xb_bl.bin"
+        COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/projectfiles/make_gcc_arm/stm32f103xb_if/build/stm32f103xb_if.bin" "${CMAKE_CURRENT_BINARY_DIR}/stm32f103xb_if.bin"
 )
