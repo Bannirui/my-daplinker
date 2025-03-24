@@ -84,20 +84,22 @@ else ()
 endif ()
 
 # 编译bootloader
-# progen generate -t make_gcc_arm -p stm32f103xb_bl -b
+# make: progen generate -t make_gcc_arm -p stm32f103xb_bl -b
+# cmake: (venv) $ progen generate -t cmake_gcc_arm -o generator=<generator> -p <project> -b
 add_custom_command(
         OUTPUT compile_bl
         DEPENDS ${my_progen}
-        COMMAND cd ${CMAKE_CURRENT_SOURCE_DIR} && source ./venv/bin/activate && progen generate -t make_gcc_arm -p stm32f103xb_bl -b
+        COMMAND cd ${CMAKE_CURRENT_SOURCE_DIR} && source ./venv/bin/activate && progen generate -t cmake_gcc_arm -o generator=make -p stm32f103xb_bl -b
         COMMENT 编译daplink的bootloader
 )
 
 # 编译固件
-# progen generate -t make_gcc_arm -p stm32f103xb_if -b
+# make: progen generate -t make_gcc_arm -p stm32f103xb_if -b
+# cmake: (venv) $ progen generate -t cmake_gcc_arm -o generator=<generator> -p <project> -b
 add_custom_command(
         OUTPUT compile_if
         DEPENDS ${my_progen}
-        COMMAND cd ${CMAKE_CURRENT_SOURCE_DIR} && source ./venv/bin/activate && progen generate -t make_gcc_arm -p stm32f103xb_if -b
+        COMMAND cd ${CMAKE_CURRENT_SOURCE_DIR} && source ./venv/bin/activate && progen generate -t cmake_gcc_arm -o generator=make -p stm32f103xb_if -b
         COMMENT 编译daplink的固件
 )
 
@@ -105,6 +107,6 @@ add_custom_target(
         compile_daplink
         ALL
         DEPENDS compile_bl compile_if
-        COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/projectfiles/make_gcc_arm/stm32f103xb_bl/build/stm32f103xb_bl.bin" "${CMAKE_CURRENT_BINARY_DIR}/stm32f103xb_bl.bin"
-        COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/projectfiles/make_gcc_arm/stm32f103xb_if/build/stm32f103xb_if.bin" "${CMAKE_CURRENT_BINARY_DIR}/stm32f103xb_if.bin"
+        COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/projectfiles/cmake_gcc_arm/stm32f103xb_bl/build/stm32f103xb_bl.bin" "${CMAKE_CURRENT_BINARY_DIR}/stm32f103xb_bl.bin"
+        COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/projectfiles/cmake_gcc_arm/stm32f103xb_if/build/stm32f103xb_if.bin" "${CMAKE_CURRENT_BINARY_DIR}/stm32f103xb_if.bin"
 )
