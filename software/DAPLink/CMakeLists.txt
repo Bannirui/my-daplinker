@@ -75,6 +75,14 @@ if (NOT ${arm_none_eabi_ver} EQUAL ${arm_none_eabi_required})
 endif ()
 message(STATUS "arm-none-eabi版本符合要求 版本是${arm_none_eabi_ver}")
 
+# 使用openocd烧录
+find_program(my_openocd openocd)
+if (${my_openocd} STREQUAL "my_openocd-NOTFOUND")
+    message(FATAL_ERROR "缺少openocd, as ${my_openocd}")
+else ()
+    message(STATUS "存在openocd环境")
+endif ()
+
 # 编译bootloader
 # progen generate -t make_gcc_arm -p stm32f103xb_bl -b
 add_custom_command(

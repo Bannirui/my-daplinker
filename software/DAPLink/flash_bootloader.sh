@@ -10,7 +10,7 @@ openocd \
 -c "stm32f1x unlock 0" \
 -c "reset halt" \
 -c "flash erase_address 0x08002000 0x2000" \
--c "flash write_image erase ./DAPLink/build/stm32f103xb_bl.elf 0x08002000" \
--c "verify_image ./DAPLink/build/stm32f103xb_bl.elf 0x08002000" \
+-c "flash write_image erase ./build/stm32f103xb_bl.bin 0x08002000" \
+-c "verify_image ./build/stm32f103xb_bl.bin 0x08002000" \
 -c "reset run" \
 -c "shutdown"
