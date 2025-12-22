@@ -15,3 +15,5 @@ _deps
 [bB][uU][iI][lL][dD]/
 .vscode/
 .idea/
+
+**/cmake-build-debug/
