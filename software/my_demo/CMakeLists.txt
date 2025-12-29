@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 3.26)
 project(my_demo C CXX ASM)
 
 # specify cross-compilers and tools
-set(arm_none_eabi_dir "/Users/dingrui/MyApp/arm-none-eabi/bin")
+set(arm_none_eabi_dir "/home/dingrui/MyApp/arm-none-eabi/gcc-arm-none-eabi-10.3-2021.10/bin")
 set(CMAKE_C_COMPILER "${arm_none_eabi_dir}/arm-none-eabi-gcc")
 set(CMAKE_CXX_COMPILER "${arm_none_eabi_dir}/arm-none-eabi-g++")
 set(CMAKE_ASM_COMPILER "${arm_none_eabi_dir}/arm-none-eabi-gcc")
