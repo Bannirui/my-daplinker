@@ -42,3 +42,5 @@ add_custom_target(daplink-if
         DEPENDS pre_build_script post_build_script_gcc
         COMMENT "Build DAPLink interface"
 )
+
+set(DAPLINK_BUILD_OUTPUT_DIR "${daplink_SOURCE_DIR}/projectfiles/cmake_gcc_arm")

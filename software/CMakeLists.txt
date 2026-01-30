@@ -24,8 +24,15 @@ include(${lib_directory}/progen.cmake)
 include(${lib_directory}/ArmNoneEabiGcc.cmake)
 include(${lib_directory}/DAPLink.cmake)
 
+add_custom_target(copy_daplink
+        COMMAND ${CMAKE_COMMAND} -E copy "${DAPLINK_BUILD_OUTPUT_DIR}/stm32f103xb_bl/build/stm32f103xb_bl_crc.bin" "${CMAKE_CURRENT_BINARY_DIR}/stm32f103xb_bl_crc.bin"
+        COMMAND ${CMAKE_COMMAND} -E copy "${DAPLINK_BUILD_OUTPUT_DIR}/stm32f103xb_if/build/stm32f103xb_if_crc.bin" "${CMAKE_CURRENT_BINARY_DIR}/stm32f103xb_if_crc.bin"
+        COMMENT "Copying DAPLink builds"
+        DEPENDS daplink-bl daplink-if
+)
+
 # Optional: set default target to daplink-build
 add_custom_target(all-daplink-build
-        DEPENDS daplink-bl daplink-if
+        DEPENDS copy_daplink
         COMMENT "Build all DAPLink targets"
 )
