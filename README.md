@@ -7,11 +7,6 @@ my-daplinker
 
 ### 1 QUICK START
 
-- 依赖[DAPLink](https://github.com/ARMmbed/DAPLink.git)因此clone代码时候需要submodule
-
-```sh
-git clone git@github.com:Bannirui/my-daplinker.git --recursive
-```
 
 - cmake脚本`sh ./configure.sh`
 
