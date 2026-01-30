@@ -9,6 +9,9 @@ if (USE_PROXY)
     set(CMAKE_DOWNLOAD_AGENT "curl")
 endif ()
 
+# 输出详细日志
+set(CMAKE_VERBOSE_MAKEFILE ON)
+
 # 项目信息
 project(diy-daplink
         VERSION 1.0
