@@ -27,8 +27,9 @@ include(${lib_directory}/DAPLink.cmake)
 add_custom_target(copy_daplink
         COMMAND ${CMAKE_COMMAND} -E copy "${DAPLINK_BUILD_OUTPUT_DIR}/stm32f103xb_bl/build/stm32f103xb_bl_crc.bin" "${CMAKE_CURRENT_BINARY_DIR}/stm32f103xb_bl_crc.bin"
         COMMAND ${CMAKE_COMMAND} -E copy "${DAPLINK_BUILD_OUTPUT_DIR}/stm32f103xb_if/build/stm32f103xb_if_crc.bin" "${CMAKE_CURRENT_BINARY_DIR}/stm32f103xb_if_crc.bin"
+        COMMAND ${CMAKE_COMMAND} -E copy "${DAPLINK_BUILD_OUTPUT_DIR}/stm32f103xb_stm32f401re_if/build/stm32f103xb_stm32f401re_if.bin" "${CMAKE_CURRENT_BINARY_DIR}/stm32f103xb_stm32f401re_if_crc.bin"
         COMMENT "Copying DAPLink builds"
-        DEPENDS daplink-bl daplink-if
+        DEPENDS stm32f103xb_bl stm32f103xb_if
 )
 
 # Optional: set default target to daplink-build

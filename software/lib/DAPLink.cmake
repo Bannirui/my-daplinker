@@ -22,7 +22,7 @@ add_custom_target(post_build_script_gcc
 )
 
 # ========== Bootloader ==========
-add_custom_target(daplink-bl
+add_custom_target(stm32f103xb_bl
         WORKING_DIRECTORY ${daplink_SOURCE_DIR}
         COMMAND ${CMAKE_COMMAND} -E env
             PYTHON=${MY_PYTHON}
@@ -33,7 +33,7 @@ add_custom_target(daplink-bl
 )
 
 # ========== Interface ==========
-add_custom_target(daplink-if
+add_custom_target(stm32f103xb_if
         WORKING_DIRECTORY ${daplink_SOURCE_DIR}
         COMMAND ${CMAKE_COMMAND} -E env
             PYTHON=${MY_PYTHON}
@@ -41,6 +41,15 @@ add_custom_target(daplink-if
             ${MY_PROGEN} generate -t cmake_gcc_arm -o generator=make -p stm32f103xb_if -b
         DEPENDS pre_build_script post_build_script_gcc
         COMMENT "Build DAPLink interface"
+)
+
+add_custom_target(stm32f401
+        WORKING_DIRECTORY ${daplink_SOURCE_DIR}
+        COMMAND ${CMAKE_COMMAND} -E env
+            PYTHON=${MY_PYTHON}
+            PATH=${ARM_GCC_BIN}:${MY_VENV}/bin:$ENV{PATH}
+            ${MY_PROGEN} generate -t cmake_gcc_arm -o generator=make -p stm32f103xb_stm32f401re_if -b
+        DEPENDS pre_build_script post_build_script_gcc
 )
 
 set(DAPLINK_BUILD_OUTPUT_DIR "${daplink_SOURCE_DIR}/projectfiles/cmake_gcc_arm")
