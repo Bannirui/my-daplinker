@@ -1,0 +1,66 @@
+{
+  "version": 3,
+
+  "configurePresets": [
+    {
+      "hidden": true,
+      "name": "base",
+      "generator": "Ninja",
+      "cacheVariables": {
+      }
+    },
+
+    {
+      "name": "linux-gcc-debug",
+      "inherits": "base",
+      "displayName": "linux-gcc-debug",
+      "binaryDir": "build/linux-gcc-debug",
+      "toolchainFile": "cmake/toolchains/linux-gcc.cmake",
+      "environment": {
+        "http_proxy": "http://127.0.0.1:7890",
+        "https_proxy": "http://127.0.0.1:7890",
+        "ALL_PROXY": "socks5://127.0.0.1:7890"
+      },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_HTTP_PROXY": "http://127.0.0.1:7890",
+        "CMAKE_HTTPS_PROXY": "http://127.0.0.1:7890",
+        "FETCHCONTENT_QUIET": "OFF",
+        "ARM_GCC_VERSION": "10.3-2021.10",
+        "ARM_NONE_EABI_DOWNLOAD_SUFIX": "x86_64-linux"
+      }
+    },
+
+    {
+      "name": "mac-clang-debug",
+      "inherits": "base",
+      "displayName": "mac-clang-debug",
+      "binaryDir": "build/mac-clang-debug",
+      "toolchainFile": "cmake/toolchains/mac-clang.cmake",
+      "environment": {
+        "http_proxy": "http://127.0.0.1:7890",
+        "https_proxy": "http://127.0.0.1:7890",
+        "ALL_PROXY": "socks5://127.0.0.1:7890"
+      },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_HTTP_PROXY": "http://127.0.0.1:7890",
+        "CMAKE_HTTPS_PROXY": "http://127.0.0.1:7890",
+        "FETCHCONTENT_QUIET": "OFF",
+        "ARM_GCC_VERSION": "10.3-2021.10",
+        "ARM_NONE_EABI_DOWNLOAD_SUFIX": "mac"
+      }
+    }
+  ],
+
+  "buildPresets": [
+    {
+      "name": "linux-gcc-debug",
+      "configurePreset": "linux-gcc-debug"
+    },
+    {
+      "name": "mac-clang-debug",
+      "configurePreset": "mac-clang-debug"
+    }
+  ]
+}

@@ -12,12 +12,12 @@ FetchContent_MakeAvailable(daplink)
 # ========== patch DAPLink python ==========
 add_custom_target(pre_build_script
         WORKING_DIRECTORY ${daplink_SOURCE_DIR}
-        COMMAND ${MY_PYTHON} ${CMAKE_SOURCE_DIR}/lib/pre_build_script.py
+        COMMAND ${MY_PYTHON} ${CMAKE_SOURCE_DIR}/cmake/pre_build_script.py
         COMMENT "Patch DAPLink pre_build_script.py"
 )
 add_custom_target(post_build_script_gcc
         WORKING_DIRECTORY ${daplink_SOURCE_DIR}
-        COMMAND ${MY_PYTHON} ${CMAKE_SOURCE_DIR}/lib/post_build_script_gcc.py
+        COMMAND ${MY_PYTHON} ${CMAKE_SOURCE_DIR}/cmake/post_build_script_gcc.py
         COMMENT "Patch DAPLink post_build_script_gcc.py"
 )
 
@@ -26,7 +26,7 @@ add_custom_target(stm32f103xb_bl
         WORKING_DIRECTORY ${daplink_SOURCE_DIR}
         COMMAND ${CMAKE_COMMAND} -E env
             PYTHON=${MY_PYTHON}
-            PATH=${ARM_GCC_BIN}:${MY_VENV}/bin:$ENV{PATH}
+            PATH=${ARM_NONE_EABI_GCC_BIN}:${MY_VENV}/bin:$ENV{PATH}
             ${MY_PROGEN} generate -t cmake_gcc_arm -o generator=make -p stm32f103xb_bl -b
         DEPENDS pre_build_script post_build_script_gcc
         COMMENT "Build DAPLink bootloader"
@@ -37,19 +37,10 @@ add_custom_target(stm32f103xb_if
         WORKING_DIRECTORY ${daplink_SOURCE_DIR}
         COMMAND ${CMAKE_COMMAND} -E env
             PYTHON=${MY_PYTHON}
-            PATH=${ARM_GCC_BIN}:${MY_VENV}/bin:$ENV{PATH}
+            PATH=${ARM_NONE_EABI_GCC_BIN}:${MY_VENV}/bin:$ENV{PATH}
             ${MY_PROGEN} generate -t cmake_gcc_arm -o generator=make -p stm32f103xb_if -b
         DEPENDS pre_build_script post_build_script_gcc
         COMMENT "Build DAPLink interface"
-)
-
-add_custom_target(stm32f401
-        WORKING_DIRECTORY ${daplink_SOURCE_DIR}
-        COMMAND ${CMAKE_COMMAND} -E env
-            PYTHON=${MY_PYTHON}
-            PATH=${ARM_GCC_BIN}:${MY_VENV}/bin:$ENV{PATH}
-            ${MY_PROGEN} generate -t cmake_gcc_arm -o generator=make -p stm32f103xb_stm32f401re_if -b
-        DEPENDS pre_build_script post_build_script_gcc
 )
 
 set(DAPLINK_BUILD_OUTPUT_DIR "${daplink_SOURCE_DIR}/projectfiles/cmake_gcc_arm")
