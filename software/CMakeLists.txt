@@ -15,8 +15,8 @@ include(${lib_directory}/progen.cmake)
 include(${lib_directory}/ArmNoneEabiGcc.cmake)
 include(${lib_directory}/DAPLink.cmake)
 
-set(BL_NAME stm32f103xb_bl.elf)
-set(IF_NAME stm32f103xb_if.elf)
+set(BL_NAME stm32f103xb_bl.hex)
+set(IF_NAME stm32f103xb_if.hex)
 add_custom_target(copy_daplink
         COMMAND ${CMAKE_COMMAND} -E copy "${DAPLINK_BUILD_OUTPUT_DIR}/stm32f103xb_bl/build/${BL_NAME}" "${CMAKE_CURRENT_BINARY_DIR}/${BL_NAME}"
         COMMAND ${CMAKE_COMMAND} -E copy "${DAPLINK_BUILD_OUTPUT_DIR}/stm32f103xb_if/build/${IF_NAME}" "${CMAKE_CURRENT_BINARY_DIR}/${IF_NAME}"

@@ -30,7 +30,24 @@
         "ARM_NONE_EABI_DOWNLOAD_SUFIX": "x86_64-linux"
       }
     },
-
+    {
+      "name": "linux-gcc-release",
+      "inherits": "base",
+      "displayName": "linux-gcc-release",
+      "binaryDir": "build/linux-gcc-release",
+      "toolchainFile": "cmake/toolchains/linux-gcc.cmake",
+      "environment": {
+        "http_proxy": "http://127.0.0.1:7890",
+        "https_proxy": "http://127.0.0.1:7890",
+        "ALL_PROXY": "socks5://127.0.0.1:7890"
+      },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "ARM_GCC_VERSION": "10.3-2021.10",
+        "ARM_NONE_EABI_DOWNLOAD_SUFIX": "x86_64-linux",
+        "FETCHCONTENT_QUIET": "OFF"
+      }
+    },
     {
       "name": "mac-clang-debug",
       "inherits": "base",
@@ -57,6 +74,10 @@
     {
       "name": "linux-gcc-debug",
       "configurePreset": "linux-gcc-debug"
+    },
+    {
+      "name": "linux-gcc-release",
+      "configurePreset": "linux-gcc-release"
     },
     {
       "name": "mac-clang-debug",
